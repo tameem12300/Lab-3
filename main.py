@@ -66,7 +66,7 @@ window = tk.Tk()
 def update_label():
    lbl_result.config(text=key_gen())
        
-window.geometry('1920x1020')
+window.geometry('800x600')
 bg_img = ImageTk.PhotoImage(file='FIFA.jpg')
 
 lbl_bg = tk.Label(window, image=bg_img)
