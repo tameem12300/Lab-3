@@ -1,59 +1,95 @@
 import tkinter as tk
-from tkinter import messagebox
-from sqrEq import sqrEquation
-
+from PIL import Image, ImageTk
+import random
 
 def close():
     window.destroy()
 
+symb_dict={
+    -17:"A",
+    -16:"B",
+    -15:"C",
+    -14:"D",
+    -13:"E",
+    -12:"F",
+    -11:"G",
+    -10:"H",
+    -9:"I",
+    -8:"J",
+    -7:"K",
+    -6:"L",
+    -5:"M",
+    -4:"N",
+    -3:"P",
+    -2:"Q",
+    -1:"R",
+    0:"S",
+    1:"T",
+    2:"U",
+    3:"V",
+    4:"W",
+    5:"X",
+    6:"Y",
+    7:"Z",
+    8:"0",
+    9:"1",
+    10:"2",
+    11:"3",
+    12:"4",
+    13:"5",
+    14:"6",
+    15:"7",
+    16:"8",
+    17:"9",
+    18:"O"
 
-def calc():
-    A = float(arg_A.get())
-    B = float(arg_B.get())
-    C = float(arg_C.get())
-    if A == 0.0:
-        tk.messagebox.showwarning('Error', 'Division by zero!')
-    else:
-        lbl_result.configure(text=sqrEquation(A, B, C))
+}
 
+def block_gen():
+    
+    a = random.randint(-17,18)
+    b = random.randint(-17,18)
+    c = random.randint(-17,18)
+    d = random.randint(-17,18)
+    sum = a+b+d+c    
 
-window = tk.Tk()
-window.geometry('576x360')
-bg_img = tk.PhotoImage(file='bg_pic.png')
+    if sum<18 and sum>-17:
+        return symb_dict.get(a) + symb_dict.get(b) + symb_dict.get(c) + symb_dict.get(d)
+    else: return block_gen()
+
+def key_gen():
+    return block_gen() + "-" + block_gen() + "-" + block_gen() 
+
+print(key_gen())
+window = tk.Tk() 
+
+def update_label():
+   lbl_result.config(text=key_gen())
+       
+window.geometry('800x600')
+bg_img = ImageTk.PhotoImage(file='FIFA.jpg')
 
 lbl_bg = tk.Label(window, image=bg_img)
 lbl_bg.place(x=0, y=0, relwidth=1, relheight=1)
 
 frame = tk.Frame(window)
-frame.place(relx=0.5, rely=0.5, anchor='center')
-
-lbl_A = tk.Label(frame, text='A', font=('Arial', 30), bg='blue', fg='white')
-lbl_A.grid(column=0, row=0, padx=10, pady=15)
-arg_A = tk.Entry(frame, width=10)
-arg_A.insert(0, '1')
-arg_A.grid(column=0, row=1, padx=10, pady=15)
-
-lbl_B = tk.Label(frame, text='B', font=('Arial', 30))
-lbl_B.grid(column=1, row=0, padx=10, pady=15)
-arg_B = tk.Entry(frame, width=10)
-arg_B.insert(0, '0')
-arg_B.grid(column=1, row=1, padx=10, pady=15)
-
-lbl_C = tk.Label(frame, text='C', font=('Arial', 30))
-lbl_C.grid(column=2, row=0, padx=10, pady=15)
-arg_C = tk.Entry(frame, width=10)
-arg_C.insert(0, '0')
-arg_C.grid(column=2, row=1, padx=10, pady=15)
+frame.place(relx=0.3, rely=0.3, anchor='n')
 
 lbl_roots = tk.Label(frame, text='Result:')
 lbl_roots.grid(column=1, row=2)
-lbl_result = tk.Label(frame, text='None yet.', font=('Arial', 10))
+lbl_result = tk.Label(frame, text=key_gen(), font=('Arial', 10))
 lbl_result.grid(column=2, row=2)
 
-btn_calc = tk.Button(frame, text='Calculate', command=calc)
-btn_calc.grid(column=0, row=3, padx=10, pady=15)
-btn_exit = tk.Button(frame, text='Cancel', command=close)
-btn_exit.grid(column=2, row=3, padx=10, pady=15)
+btn_exit = tk.Button(frame, text='enter', command=close)
+btn_exit.grid(column=2, row=4, padx=10, pady=15)
+
+btn_new = tk.Button(frame,text="new", command=update_label)
+btn_new.grid(column=1, row=4, padx=10, pady=15)
 
 
 window.mainloop()
+
+
+
+
+
